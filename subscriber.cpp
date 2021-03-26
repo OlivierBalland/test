@@ -1,6 +1,9 @@
 #include <iostream>
 #include <memory>
 
+#include <unistd.h>
+#include <stdlib.h>
+
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
@@ -11,6 +14,10 @@ public:
     : Node("minimal_subscriber")
     {
         RCLCPP_INFO(this->get_logger(), "Launching node...");
+
+        int *leakInteger = static_cast<int *>(malloc(sizeof(int)));
+        *leakInteger = 1;
+        RCLCPP_INFO(this->get_logger(), "Integer = %i", *leakInteger);
 
         subscription_ = this->create_subscription<std_msgs::msg::String>(
                         "topic",
