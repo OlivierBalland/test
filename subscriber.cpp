@@ -10,12 +10,14 @@ public:
     MinimalSubscriber()
     : Node("minimal_subscriber")
     {
-    subscription_ = this->create_subscription<std_msgs::msg::String>(
-      "topic",
-      10,
-      [this](std_msgs::msg::String::UniquePtr msg) {
-        RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
-      });
+        RCLCPP_INFO(this->get_logger(), "Launching node...");
+
+        subscription_ = this->create_subscription<std_msgs::msg::String>(
+                        "topic",
+                        10,
+                        [this](std_msgs::msg::String::UniquePtr msg) {
+                            RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
+                        });
     }
 
 private:
